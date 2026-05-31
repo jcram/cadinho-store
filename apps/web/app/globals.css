@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/*
+  Cadinho — identidade visual ("Música é Presença")
+  Paleta vintage sépia/preto sobre creme. Tailwind v4: tokens via @theme.
+*/
+@theme {
+  --color-cream: #edeae3;
+  --color-cream-dark: #e2ddd2;
+  --color-ink: #1a1a1a;
+  --color-ink-soft: #2b2b2b;
+  --color-sepia: #3d2e26;
+  --color-sepia-light: #6b5546;
+  --color-accent: #c4622d;
+
+  --font-display: var(--font-special-elite);
+  --font-body: var(--font-courier-prime);
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body), "Courier New", monospace;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), "Courier New", monospace;
+}

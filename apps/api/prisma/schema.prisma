@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Disco {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  titulo    String
+  artista   String
+  genero    String
+  ano       Int
+  // preço em reais (Float). Para produção, considerar inteiro em centavos.
+  preco     Float
+  capaUrl   String?  @map("capa_url")
+  descricao String?
+  estoque   Int      @default(0)
+  // status: "disponivel" | "esgotado"
+  status    String   @default("disponivel")
+  destaque  Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("discos")
+}
+
+model Evento {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  nome      String
+  tipo      String
+  descricao String
+  fotoUrl   String?  @map("foto_url")
+  // link externo usado no botão "Saiba Mais"
+  link      String?
+  destaque  Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("eventos")
+}
