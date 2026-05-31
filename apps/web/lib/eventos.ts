@@ -1,5 +1,5 @@
 import type { Evento, EventoFilters } from "@cadinho/shared";
-import { API_URL } from "@/lib/api";
+import { SERVER_API_URL, SERVER_FETCH_TIMEOUT_MS } from "@/lib/serverApi";
 
 export async function fetchEventos(
   filters: EventoFilters = {},
@@ -11,8 +11,9 @@ export async function fetchEventos(
   const qs = params.toString();
 
   try {
-    const res = await fetch(`${API_URL}/eventos${qs ? `?${qs}` : ""}`, {
+    const res = await fetch(`${SERVER_API_URL}/eventos${qs ? `?${qs}` : ""}`, {
       next: { revalidate: 60 },
+      signal: AbortSignal.timeout(SERVER_FETCH_TIMEOUT_MS),
     });
     if (!res.ok) return [];
     return (await res.json()) as Evento[];

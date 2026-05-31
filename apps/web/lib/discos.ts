@@ -1,5 +1,5 @@
 import type { Disco, DiscoFilters } from "@cadinho/shared";
-import { API_URL } from "@/lib/api";
+import { SERVER_API_URL, SERVER_FETCH_TIMEOUT_MS } from "@/lib/serverApi";
 
 export async function fetchDiscos(
   filters: DiscoFilters = {},
@@ -12,8 +12,9 @@ export async function fetchDiscos(
   const qs = params.toString();
 
   try {
-    const res = await fetch(`${API_URL}/discos${qs ? `?${qs}` : ""}`, {
+    const res = await fetch(`${SERVER_API_URL}/discos${qs ? `?${qs}` : ""}`, {
       next: { revalidate: 60 },
+      signal: AbortSignal.timeout(SERVER_FETCH_TIMEOUT_MS),
     });
     if (!res.ok) return [];
     return (await res.json()) as Disco[];
