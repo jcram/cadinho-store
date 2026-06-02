@@ -6,14 +6,9 @@ import { Container } from "@/components/Container";
 import { cn } from "@/lib/cn";
 
 const NAV = [
-  { label: "Loja", href: "/loja" },
   { label: "Discos", href: "/discos" },
-  { label: "Rádio", href: "/radio" },
-  { label: "Cadinho Songs", href: "/songs" },
-  { label: "Open Deck", href: "/open-deck" },
-  { label: "Agenda", href: "/agenda" },
-  { label: "Sobre", href: "/sobre" },
-  { label: "Contato", href: "/contato" },
+  { label: "Encontros", href: "/agenda" },
+  { label: "Contatos", href: "/contato" },
 ];
 
 function IconButton({

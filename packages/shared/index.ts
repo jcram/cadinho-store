@@ -77,6 +77,43 @@ export interface EventoFilters {
   tipo?: string;
 }
 
+export const PEDIDO_STATUS = ["pendente", "pago", "cancelado"] as const;
+export type PedidoStatus = (typeof PEDIDO_STATUS)[number];
+
+export interface PedidoItem {
+  id: string;
+  pedidoId: string;
+  discoId: string;
+  titulo: string;
+  artista: string;
+  preco: number;
+  quantidade: number;
+}
+
+export interface Pedido {
+  id: string;
+  status: PedidoStatus;
+  nomeCliente: string;
+  emailCliente: string;
+  total: number;
+  pixCopiaECola: string;
+  pagoEm: string | null;
+  itens: PedidoItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreatePedidoItemInput {
+  discoId: string;
+  quantidade: number;
+}
+
+export interface CreatePedidoInput {
+  nomeCliente: string;
+  emailCliente: string;
+  itens: CreatePedidoItemInput[];
+}
+
 export interface LoginInput {
   email: string;
   password: string;

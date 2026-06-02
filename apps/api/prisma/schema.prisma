@@ -43,3 +43,34 @@ model Evento {
 
   @@map("eventos")
 }
+
+model Pedido {
+  id            String       @id @default(cuid())
+  // status: "pendente" | "pago" | "cancelado"
+  status        String       @default("pendente")
+  nomeCliente   String       @map("nome_cliente")
+  emailCliente  String       @map("email_cliente")
+  total         Float
+  // Pix "copia e cola" (simulado nesta fase)
+  pixCopiaECola String       @map("pix_copia_e_cola")
+  pagoEm        DateTime?    @map("pago_em")
+  itens         PedidoItem[]
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  @@map("pedidos")
+}
+
+model PedidoItem {
+  id         String @id @default(cuid())
+  pedidoId   String @map("pedido_id")
+  pedido     Pedido @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  discoId    String @map("disco_id")
+  // snapshots no momento da compra (preço/título podem mudar depois)
+  titulo     String
+  artista    String
+  preco      Float
+  quantidade Int    @default(1)
+
+  @@map("pedido_itens")
+}

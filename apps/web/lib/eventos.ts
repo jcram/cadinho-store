@@ -1,6 +1,22 @@
 import type { Evento, EventoFilters } from "@cadinho/shared";
 import { SERVER_API_URL, SERVER_FETCH_TIMEOUT_MS } from "@/lib/serverApi";
 
+export async function fetchEventoBySlug(slug: string): Promise<Evento | null> {
+  try {
+    const res = await fetch(
+      `${SERVER_API_URL}/eventos/slug/${encodeURIComponent(slug)}`,
+      {
+        next: { revalidate: 60 },
+        signal: AbortSignal.timeout(SERVER_FETCH_TIMEOUT_MS),
+      },
+    );
+    if (!res.ok) return null;
+    return (await res.json()) as Evento;
+  } catch {
+    return null;
+  }
+}
+
 export async function fetchEventos(
   filters: EventoFilters = {},
 ): Promise<Evento[]> {

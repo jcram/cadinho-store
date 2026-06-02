@@ -59,6 +59,9 @@ export default function AdminLayout({
             <Link href="/admin/eventos" className="hover:text-accent">
               Encontros
             </Link>
+            <Link href="/admin/pedidos" className="hover:text-accent">
+              Pedidos
+            </Link>
             <button
               onClick={handleLogout}
               className="cursor-pointer text-sepia-light hover:text-accent"

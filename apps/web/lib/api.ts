@@ -1,12 +1,14 @@
 import type {
   CreateDiscoInput,
   CreateEventoInput,
+  CreatePedidoInput,
   Disco,
   DiscoFilters,
   Evento,
   EventoFilters,
   LoginInput,
   LoginResponse,
+  Pedido,
   UpdateDiscoInput,
   UpdateEventoInput,
 } from "@cadinho/shared";
@@ -174,6 +176,29 @@ export const api = {
 
   uploadCapa(file: File): Promise<string> {
     return this.uploadImagem(file);
+  },
+
+  // --- Pedidos ---
+  listPedidos(status?: string) {
+    const qs = status ? `?status=${encodeURIComponent(status)}` : "";
+    return request<Pedido[]>(`/pedidos${qs}`, {}, true);
+  },
+
+  // checkout (públicos)
+  createPedido(input: CreatePedidoInput) {
+    return request<Pedido>("/pedidos", {
+      method: "POST",
+      headers: jsonHeaders(),
+      body: JSON.stringify(input),
+    });
+  },
+
+  getPedido(id: string) {
+    return request<Pedido>(`/pedidos/${id}`);
+  },
+
+  pagarPedido(id: string) {
+    return request<Pedido>(`/pedidos/${id}/pagar`, { method: "POST" });
   },
 };
 
